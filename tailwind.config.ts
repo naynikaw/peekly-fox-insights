@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,7 +25,7 @@ export default {
 			},
 			colors: {
 				peekly: {
-					orange: '#FF6B00', // Updated to match the fox logo color
+					orange: '#F5571A', // Updated to the new orange color
 					dark: '#1F2937',
 				},
 				border: 'hsl(var(--border))',

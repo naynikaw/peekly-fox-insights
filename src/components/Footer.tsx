@@ -46,9 +46,11 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2">
             <a href="/" className="flex items-center gap-2 mb-6">
-              <div className="relative w-8 h-8">
-                <span className="absolute inset-0 flex items-center justify-center text-2xl">🦊</span>
-              </div>
+              <img 
+                src="/lovable-uploads/f74d180e-cb8f-43d0-952c-2261b1164511.png" 
+                alt="Peekly Fox" 
+                className="w-10 h-10"
+              />
               <span className="text-2xl font-heading font-bold text-white">Peekly</span>
             </a>
             <p className="text-gray-300 mb-6 max-w-xs">

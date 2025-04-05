@@ -50,40 +50,25 @@ const Hero = () => {
               
               {/* Fox */}
               <div className="w-full h-full relative flex items-center justify-center animate-float z-10">
-                <div className="fox-shadow relative w-64 h-64">
-                  <div className="absolute inset-0 bg-peekly-orange rounded-full"></div>
+                <div className="relative w-64 h-64 flex items-center justify-center">
+                  <img 
+                    src="/lovable-uploads/f74d180e-cb8f-43d0-952c-2261b1164511.png" 
+                    alt="Peekly Fox" 
+                    className="w-48 h-48 object-contain"
+                  />
                   
-                  {/* Fox Face */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-48 h-48">
-                      {/* Ears */}
-                      <div className="absolute -top-12 -left-8 w-12 h-20 bg-peekly-orange transform rotate-[-20deg] rounded-t-full border-4 border-white"></div>
-                      <div className="absolute -top-12 -right-8 w-12 h-20 bg-peekly-orange transform rotate-[20deg] rounded-t-full border-4 border-white"></div>
-                      
-                      {/* Face */}
-                      <div className="absolute inset-0 bg-white rounded-full"></div>
-                      
-                      {/* Eyes */}
-                      <div className="absolute top-16 left-12 w-6 h-6 bg-black rounded-full"></div>
-                      <div className="absolute top-16 right-12 w-6 h-6 bg-black rounded-full"></div>
-                      
-                      {/* Nose */}
-                      <div className="absolute top-24 left-1/2 transform -translate-x-1/2 w-6 h-4 bg-black rounded-full"></div>
-                    </div>
+                  {/* Digital Elements */}
+                  <div className="absolute -top-6 -right-6 p-2 bg-white rounded-lg shadow-lg transform rotate-12 animate-wiggle">
+                    <div className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center text-xs font-semibold">📊</div>
                   </div>
-                </div>
-                
-                {/* Digital Elements */}
-                <div className="absolute -top-6 -right-6 p-2 bg-white rounded-lg shadow-lg transform rotate-12 animate-wiggle">
-                  <div className="w-12 h-8 bg-blue-100 rounded flex items-center justify-center text-xs font-semibold">📊</div>
-                </div>
-                
-                <div className="absolute -bottom-2 -left-8 p-2 bg-white rounded-lg shadow-lg transform -rotate-6 animate-float">
-                  <div className="w-12 h-8 bg-green-100 rounded flex items-center justify-center text-xs font-semibold">📈</div>
-                </div>
-                
-                <div className="absolute bottom-12 -right-12 p-2 bg-white rounded-lg shadow-lg transform -rotate-12 animate-wiggle">
-                  <div className="w-12 h-8 bg-purple-100 rounded flex items-center justify-center text-xs font-semibold">💡</div>
+                  
+                  <div className="absolute -bottom-2 -left-8 p-2 bg-white rounded-lg shadow-lg transform -rotate-6 animate-float">
+                    <div className="w-12 h-8 bg-green-100 rounded flex items-center justify-center text-xs font-semibold">📈</div>
+                  </div>
+                  
+                  <div className="absolute bottom-12 -right-12 p-2 bg-white rounded-lg shadow-lg transform -rotate-12 animate-wiggle">
+                    <div className="w-12 h-8 bg-purple-100 rounded flex items-center justify-center text-xs font-semibold">💡</div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -13,12 +13,12 @@ const Header = () => {
   return (
     <header className="w-full fixed top-0 left-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2">
-          <div className="relative w-8 h-8">
-            <span className="absolute inset-0 rounded-full bg-peekly-orange animate-pulse opacity-75"></span>
-            <span className="absolute inset-0 flex items-center justify-center text-2xl">🦊</span>
-          </div>
-          <span className="text-2xl font-heading font-bold text-peekly-dark">Peekly</span>
+        <a href="/" className="flex items-center">
+          <img 
+            src="/lovable-uploads/a8e19923-a77e-4578-92a1-7082fa49a066.png" 
+            alt="Peekly" 
+            className="h-8 md:h-10"
+          />
         </a>
 
         {/* Desktop Navigation */}

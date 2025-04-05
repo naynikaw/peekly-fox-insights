@@ -47,7 +47,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <a href="/" className="flex items-center gap-2 mb-6">
               <img 
-                src="/lovable-uploads/f74d180e-cb8f-43d0-952c-2261b1164511.png" 
+                src="/lovable-uploads/32c7a0ad-7bb8-437b-a840-96df303ec58c.png" 
                 alt="Peekly Fox" 
                 className="w-10 h-10"
               />

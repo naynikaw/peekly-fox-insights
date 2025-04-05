@@ -15,9 +15,9 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" className="flex items-center">
           <img 
-            src="/lovable-uploads/a8e19923-a77e-4578-92a1-7082fa49a066.png" 
+            src="/lovable-uploads/peekly-logo.png" 
             alt="Peekly" 
-            className="h-8 md:h-10"
+            className="h-12 md:h-16"
           />
         </a>
 

@@ -1,5 +1,5 @@
 
-import { ArrowRight, Database, MessageSquare, LineChart } from "lucide-react";
+import { ArrowRight, Database, MessageSquare, LineChart, BarChart4 } from "lucide-react";
 
 const HowItWorks = () => {
   const steps = [
@@ -9,7 +9,14 @@ const HowItWorks = () => {
       description: "Easily connect your marketing data sources like Google Analytics, Ads, Shopify, and more.",
       color: "bg-blue-50",
       borderColor: "border-blue-200",
-      iconBg: "bg-blue-100"
+      iconBg: "bg-blue-100",
+      integrations: [
+        { name: "Google Analytics", icon: <BarChart4 size={16} className="text-blue-600" /> },
+        { name: "Google Ads", icon: <ArrowRight size={16} className="text-red-500" /> },
+        { name: "Shopify", icon: <Database size={16} className="text-green-500" /> },
+        { name: "Stripe", icon: <Database size={16} className="text-purple-500" /> },
+        { name: "Excel", icon: <Database size={16} className="text-cyan-500" /> }
+      ]
     },
     {
       icon: <MessageSquare className="h-8 w-8 text-purple-500" />,
@@ -49,7 +56,18 @@ const HowItWorks = () => {
                 {step.icon}
               </div>
               <h3 className="text-xl font-heading font-semibold mb-3">{step.title}</h3>
-              <p className="text-gray-600">{step.description}</p>
+              <p className="text-gray-600 mb-4">{step.description}</p>
+              
+              {/* Integration icons for the Connect step */}
+              {index === 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {step.integrations.map((integration, idx) => (
+                    <div key={idx} className="bg-white p-2 rounded-lg shadow-sm hover:shadow transition-all hover:-translate-y-1 cursor-pointer">
+                      {integration.icon}
+                    </div>
+                  ))}
+                </div>
+              )}
               
               {index < steps.length - 1 && (
                 <div className="hidden md:flex absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">

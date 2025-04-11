@@ -34,6 +34,10 @@ const CallToAction = () => {
                     Start Peeking into Your Data Today
                   </h2>
                   
+                  <p className="text-xl font-semibold text-peekly-orange mb-3">
+                    Stop guessing. Start knowing.
+                  </p>
+                  
                   <p className="text-lg text-gray-600 mb-8">
                     Join businesses already saving time and making smarter decisions with Peekly's AI-powered marketing insights.
                   </p>

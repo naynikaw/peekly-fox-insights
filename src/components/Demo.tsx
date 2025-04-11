@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { SearchX, Search, ArrowRight } from "lucide-react";
 import {
@@ -19,7 +19,6 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const Demo = () => {
   const [query, setQuery] = useState("");
@@ -28,84 +27,156 @@ const Demo = () => {
   const [demoResult, setDemoResult] = useState<null | {
     title: string;
     text: string;
+    sources: string[];
     chartType: "bar" | "line" | "area" | "pie";
     chartData: any[];
     recommendation: string;
   }>(null);
 
-  const channelPerformanceData = [
-    { name: "Facebook", conversions: 320, ctr: 4.2, cpa: 12, fill: "#4267B2" },
-    { name: "Instagram", conversions: 280, ctr: 3.8, cpa: 14, fill: "#E1306C" },
-    { name: "Google", conversions: 180, ctr: 2.3, cpa: 22, fill: "#34A853" },
-    { name: "LinkedIn", conversions: 90, ctr: 1.5, cpa: 38, fill: "#0077B5" },
-    { name: "Twitter", conversions: 50, ctr: 1.1, cpa: 45, fill: "#1DA1F2" }
+  // Example queries for auto-typing animation
+  const exampleQueries = [
+    "Which day of the week gets us the highest signups?",
+    "Which ad campaigns drove the most first-time customers?",
+    "What's my average customer lifetime value by channel?",
+    "Which product bundles have the highest repeat purchase rate?",
+    "Which marketing channel brings customers with the lowest refund rates?",
+    "Has my ROAS improved since we increased our ad budget?"
+  ];
+
+  // Auto-typing animation states
+  const [currentQueryIndex, setCurrentQueryIndex] = useState(0);
+  const [typingPosition, setTypingPosition] = useState(0);
+  const [displayedQuery, setDisplayedQuery] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+  const [pauseTyping, setPauseTyping] = useState(false);
+
+  // Data for charts
+  const weekdaySignupsData = [
+    { name: "Monday", value: 45, fill: "#9b87f5" },
+    { name: "Tuesday", value: 52, fill: "#F97316" },
+    { name: "Wednesday", value: 78, fill: "#0EA5E9" },
+    { name: "Thursday", value: 86, fill: "#8B5CF6" },
+    { name: "Friday", value: 64, fill: "#D946EF" },
+    { name: "Saturday", value: 42, fill: "#9b87f5" },
+    { name: "Sunday", value: 35, fill: "#F97316" }
   ];
   
-  const monthlyComparisonData = [
-    { name: "Week 1", "This Month": 65, "Last Month": 42 },
-    { name: "Week 2", "This Month": 78, "Last Month": 55 },
-    { name: "Week 3", "This Month": 94, "Last Month": 70 },
-    { name: "Week 4", "This Month": 120, "Last Month": 85 }
+  const adCampaignData = [
+    { name: "Summer Sale", value: 124, firstTime: 87, returning: 37, fill: "#9b87f5" },
+    { name: "Back to School", value: 86, firstTime: 63, returning: 23, fill: "#F97316" },
+    { name: "Holiday Special", value: 142, firstTime: 95, returning: 47, fill: "#0EA5E9" },
+    { name: "New Year", value: 98, firstTime: 72, returning: 26, fill: "#8B5CF6" },
+    { name: "Spring Launch", value: 76, firstTime: 58, returning: 18, fill: "#D946EF" }
   ];
   
-  const budgetAllocationData = [
-    { name: "Social", value: 45 },
-    { name: "Search", value: 25 },
-    { name: "Display", value: 15 },
-    { name: "Email", value: 10 },
-    { name: "Other", value: 5 }
+  const cltValueData = [
+    { name: "Organic", value: 450, fill: "#9b87f5" },
+    { name: "Paid Social", value: 320, fill: "#F97316" },
+    { name: "Email", value: 520, fill: "#0EA5E9" },
+    { name: "Referral", value: 580, fill: "#8B5CF6" },
+    { name: "Direct", value: 280, fill: "#D946EF" }
   ];
   
-  const COLORS = ['#9b87f5', '#F97316', '#0EA5E9', '#8B5CF6', '#D946EF'];
-  
+  const roasTimelineData = [
+    { name: "Jan", beforeBudgetIncrease: 3.2, afterBudgetIncrease: 3.1 },
+    { name: "Feb", beforeBudgetIncrease: 3.1, afterBudgetIncrease: 3.3 },
+    { name: "Mar", beforeBudgetIncrease: 2.9, afterBudgetIncrease: 3.5 },
+    { name: "Apr", beforeBudgetIncrease: 3.0, afterBudgetIncrease: 3.8 },
+    { name: "May", beforeBudgetIncrease: 3.1, afterBudgetIncrease: 4.2 },
+    { name: "Jun", beforeBudgetIncrease: 2.8, afterBudgetIncrease: 4.5 }
+  ];
+
+  // Auto-typing animation effect
+  useEffect(() => {
+    // Skip animation if user has entered their own query
+    if (!isTyping) return;
+    
+    const currentExample = exampleQueries[currentQueryIndex];
+    
+    if (pauseTyping) {
+      const pause = setTimeout(() => {
+        setPauseTyping(false);
+        setTypingPosition(0);
+        setCurrentQueryIndex((prevIndex) => (prevIndex + 1) % exampleQueries.length);
+      }, 2000);
+      
+      return () => clearTimeout(pause);
+    }
+    
+    if (typingPosition < currentExample.length) {
+      const typing = setTimeout(() => {
+        setDisplayedQuery(currentExample.substring(0, typingPosition + 1));
+        setTypingPosition(prev => prev + 1);
+      }, Math.random() * 50 + 50); // Random typing speed for realism
+      
+      return () => clearTimeout(typing);
+    } else {
+      setPauseTyping(true);
+    }
+  }, [typingPosition, currentQueryIndex, pauseTyping, isTyping, exampleQueries]);
+
+  const handleInputFocus = () => {
+    setIsTyping(false);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!query.trim()) return;
+    if (!query.trim() && !displayedQuery.trim()) return;
     
     setLoading(true);
     setDemoActive(true);
     
+    // Use either user-entered query or the current displayed auto-typing query
+    const submittedQuery = query.trim() || displayedQuery.trim();
+    
     // Match query to predefined responses based on example queries
     setTimeout(() => {
-      if (query.toLowerCase().includes("roi") || query.toLowerCase().includes("best")) {
+      if (submittedQuery.toLowerCase().includes("day of the week") || submittedQuery.toLowerCase().includes("highest signups")) {
         setDemoResult({
-          title: "Channel ROI Analysis",
-          text: "Based on your data from the last 30 days, your social media campaigns are outperforming your search ads by 37% in terms of conversion rate. The average CTR across channels is 2.8%, with Facebook showing the highest engagement.",
+          title: "Weekday Signup Analysis",
+          text: "Thursday consistently shows the highest signup volume, with 23% more signups than the average weekday. Wednesday is a close second. Weekend signups are significantly lower, with Sunday having the lowest conversion rate.",
+          sources: ["Google Analytics", "CRM Data"],
           chartType: "bar",
-          chartData: channelPerformanceData,
-          recommendation: "Consider reallocating 20% of your search ad budget to your top-performing social campaigns to maximize ROI. Focus on the 25-34 age demographic where engagement is highest."
+          chartData: weekdaySignupsData,
+          recommendation: "Consider timing your email campaigns and special offers for Thursday release to capitalize on peak signup days. You might also want to test additional incentives for weekend signups to increase conversion during lower-performing days."
         });
-      } else if (query.toLowerCase().includes("conversion") || query.toLowerCase().includes("compare")) {
+      } else if (submittedQuery.toLowerCase().includes("ad campaigns") || submittedQuery.toLowerCase().includes("first-time")) {
         setDemoResult({
-          title: "Conversion Rate Comparison",
-          text: "Your conversion rates have improved by 14.3% compared to last month. The strongest weekly growth was observed in week 3, with a 34% increase over the same period last month.",
-          chartType: "line",
-          chartData: monthlyComparisonData,
-          recommendation: "The new call-to-action design implemented in week 2 correlates with increased conversions. Consider expanding this design approach to all campaign landing pages."
+          title: "First-Time Customer Acquisition by Campaign",
+          text: "Your Holiday Special campaign was most effective at attracting new customers, bringing in 95 first-time buyers. The Summer Sale was second with 87 first-time customers.",
+          sources: ["Google Ads", "Shopify", "CRM Data"],
+          chartType: "bar",
+          chartData: adCampaignData,
+          recommendation: "The Holiday Special campaign's messaging and creative assets performed exceptionally well for new customer acquisition. Consider adapting these elements for your upcoming campaigns, particularly the clear value proposition and time-limited offer structure."
         });
-      } else if (query.toLowerCase().includes("budget") || query.toLowerCase().includes("focus")) {
+      } else if (submittedQuery.toLowerCase().includes("lifetime value") || submittedQuery.toLowerCase().includes("cltv")) {
         setDemoResult({
-          title: "Budget Allocation Analysis",
-          text: "Your current budget allocation favors social media channels (45%), followed by search advertising (25%). Based on performance metrics, this distribution is optimal for your current goals.",
+          title: "Customer Lifetime Value by Channel",
+          text: "Referral customers have the highest lifetime value at $580, followed by Email at $520. Direct traffic and Paid Social show lower lifetime values, suggesting opportunities for improved targeting.",
+          sources: ["Shopify", "Stripe", "Google Analytics"],
           chartType: "pie",
-          chartData: budgetAllocationData,
-          recommendation: "Your social media spending is well-optimized. For next quarter, consider increasing your search budget by 5-10% to capitalize on growing search traffic for your primary keywords."
+          chartData: cltValueData,
+          recommendation: "Your referral program is generating your highest-value customers. Consider increasing referral incentives and making the program more visible. For paid social, review targeting parameters as these customers currently have a significantly lower lifetime value."
+        });
+      } else if (submittedQuery.toLowerCase().includes("roas") || submittedQuery.toLowerCase().includes("ad budget")) {
+        setDemoResult({
+          title: "ROAS Before & After Budget Increase",
+          text: "Since increasing your ad budget in March, your Return On Ad Spend (ROAS) has consistently improved month-over-month, rising from an average of 3.0 to 4.5 by June.",
+          sources: ["Google Ads", "Facebook Ads", "Google Analytics"],
+          chartType: "line",
+          chartData: roasTimelineData,
+          recommendation: "The increased budget appears to have unlocked better performing ad inventory and audience segments. Continue with the current budget allocation, but consider conducting incrementality testing to verify that these improvements are directly attributable to the budget increase rather than seasonal effects."
         });
       } else {
-        // Default fallback
+        // Default fallback - use whichever of the specific queries seems most relevant
         setDemoResult({
-          title: "Campaign Performance Analysis",
-          text: "Analysis of your recent campaigns shows strong performance across digital channels with opportunities for optimization in your targeting strategy.",
-          chartType: "area",
-          chartData: [
-            { name: 'Jan', value: 400 },
-            { name: 'Feb', value: 300 },
-            { name: 'Mar', value: 600 },
-            { name: 'Apr', value: 800 },
-            { name: 'May', value: 700 },
-          ],
-          recommendation: "Based on audience engagement patterns, weekday afternoons (2-5pm) show the highest response rates. Consider scheduling more content during these peak hours."
+          title: "Weekday Signup Analysis",
+          text: "Thursday consistently shows the highest signup volume, with 23% more signups than the average weekday. Wednesday is a close second. Weekend signups are significantly lower, with Sunday having the lowest conversion rate.",
+          sources: ["Google Analytics", "CRM Data"],
+          chartType: "bar",
+          chartData: weekdaySignupsData,
+          recommendation: "Consider timing your email campaigns and special offers for Thursday release to capitalize on peak signup days. You might also want to test additional incentives for weekend signups to increase conversion during lower-performing days."
         });
       }
       setLoading(false);
@@ -116,16 +187,14 @@ const Demo = () => {
     setQuery("");
     setDemoActive(false);
     setDemoResult(null);
+    setIsTyping(true);
+    setTypingPosition(0);
+    setPauseTyping(false);
   };
-
-  const exampleQueries = [
-    "Which marketing channel has the best ROI?",
-    "Compare this month's conversion rates to last month",
-    "Where should I focus my ad budget next month?"
-  ];
 
   const handleExampleClick = (example: string) => {
     setQuery(example);
+    setIsTyping(false); // Stop auto-typing when user selects an example
   };
 
   const renderChart = () => {
@@ -141,8 +210,14 @@ const Demo = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="conversions" name="Conversions" fill="#9b87f5" />
-              <Bar dataKey="ctr" name="CTR (%)" fill="#f5571a" />
+              {demoResult.chartData[0]?.firstTime !== undefined ? (
+                <>
+                  <Bar dataKey="firstTime" name="First-Time Customers" fill="#9b87f5" />
+                  <Bar dataKey="returning" name="Returning Customers" stackId="a" fill="#f5571a" />
+                </>
+              ) : (
+                <Bar dataKey="value" name="Signups" fill="#f5571a" />
+              )}
             </BarChart>
           </ResponsiveContainer>
         );
@@ -155,8 +230,8 @@ const Demo = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="This Month" stroke="#9b87f5" strokeWidth={2} />
-              <Line type="monotone" dataKey="Last Month" stroke="#8E9196" strokeWidth={2} strokeDasharray="5 5" />
+              <Line type="monotone" dataKey="beforeBudgetIncrease" name="Before Budget Increase" stroke="#8E9196" strokeWidth={2} />
+              <Line type="monotone" dataKey="afterBudgetIncrease" name="After Budget Increase" stroke="#f5571a" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         );
@@ -172,13 +247,13 @@ const Demo = () => {
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="value"
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                label={({ name, percent }) => `${name}: $${demoResult.chartData.find(item => item.name === name)?.value}`}
               >
                 {demoResult.chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip formatter={(value) => [`$${value}`, 'Lifetime Value']} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
@@ -204,9 +279,9 @@ const Demo = () => {
     <section id="try-demo" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Peekly in Action</h2>
+          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Ask the Questions Dashboards Can't Answer.</h2>
           <p className="text-lg text-gray-600 max-w-xl mx-auto">
-            Try asking a question about your marketing data and see how Peekly responds.
+            Your data knows the answers — you've just never had the right way to ask.
           </p>
         </div>
 
@@ -239,13 +314,14 @@ const Demo = () => {
                       type="text"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      placeholder="Example: What was my best performing campaign last month?"
+                      onFocus={handleInputFocus}
+                      placeholder={isTyping ? displayedQuery : "Ask a question about your marketing data..."}
                       className="w-full p-4 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-peekly-orange focus:border-transparent"
                     />
                     <Button 
                       type="submit"
                       className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-peekly-orange hover:bg-peekly-orange/90"
-                      disabled={!query.trim()}
+                      disabled={!query.trim() && !displayedQuery.trim()}
                     >
                       <ArrowRight className="h-5 w-5" />
                     </Button>
@@ -270,7 +346,7 @@ const Demo = () => {
                   <div className="bg-peekly-orange h-8 w-8 rounded-full flex-shrink-0 flex items-center justify-center text-white font-semibold">
                     Q
                   </div>
-                  <p className="ml-3 text-gray-700">{query}</p>
+                  <p className="ml-3 text-gray-700">{query || displayedQuery}</p>
                 </div>
                 
                 {loading ? (
@@ -287,6 +363,15 @@ const Demo = () => {
                         P
                       </div>
                       <div className="ml-3 w-full">
+                        {/* Data sources chips */}
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {demoResult?.sources.map((source, i) => (
+                            <span key={i} className="text-xs bg-white px-2 py-1 rounded-full border border-gray-200 text-gray-600">
+                              {source}
+                            </span>
+                          ))}
+                        </div>
+                        
                         <h4 className="font-semibold text-lg mb-2">{demoResult?.title}</h4>
                         <p className="text-gray-700 mb-4">{demoResult?.text}</p>
                         <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 h-64">

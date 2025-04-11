@@ -16,7 +16,7 @@ const Hero = () => {
               Ask Your Data <span className="text-peekly-orange">Anything.</span>
             </h1>
             <p className="text-lg text-gray-600 md:text-xl max-w-lg">
-              Peekly is your AI marketing consultant — connect your data sources and get instant answers, insights, and visualizations, all through natural language.
+              Stop wasting hours digging through dashboards. Start asking your data real questions — and get clear answers in seconds.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">

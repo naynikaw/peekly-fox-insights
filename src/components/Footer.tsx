@@ -1,5 +1,6 @@
 
 import { Github, Twitter, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,7 +10,7 @@ const Footer = () => {
       title: "Product",
       links: [
         { label: "Features", href: "#" },
-        { label: "Pricing", href: "#" },
+        { label: "Pricing", href: "/pricing" },
         { label: "Case Studies", href: "#" },
         { label: "Documentation", href: "#" }
       ]
@@ -45,14 +46,14 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-6">
+            <Link to="/" className="flex items-center gap-2 mb-6">
               <img 
                 src="/lovable-uploads/32c7a0ad-7bb8-437b-a840-96df303ec58c.png" 
                 alt="Peekly Fox" 
                 className="w-10 h-10"
               />
               <span className="text-2xl font-heading font-bold text-white">Peekly</span>
-            </a>
+            </Link>
             <p className="text-gray-300 mb-6 max-w-xs">
               Ask your marketing data anything and get instant insights with our AI-powered analytics platform.
             </p>
@@ -76,12 +77,21 @@ const Footer = () => {
               <ul className="space-y-3">
                 {column.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
-                    <a 
-                      href={link.href} 
-                      className="text-gray-300 hover:text-white transition-colors"
-                    >
-                      {link.label}
-                    </a>
+                    {link.href.startsWith('/') ? (
+                      <Link 
+                        to={link.href} 
+                        className="text-gray-300 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a 
+                        href={link.href} 
+                        className="text-gray-300 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

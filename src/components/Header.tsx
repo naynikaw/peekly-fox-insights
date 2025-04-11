@@ -24,9 +24,6 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link to="/pricing" className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors">
-            Pricing
-          </Link>
           <a href="#how-it-works" className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors">
             How It Works
           </a>
@@ -36,11 +33,8 @@ const Header = () => {
           <a href="#testimonials" className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors">
             Testimonials
           </a>
-          <Button asChild variant="outline" className="ml-4">
-            <a href="#contact">Contact</a>
-          </Button>
           <Button asChild className="bg-peekly-orange hover:bg-peekly-orange/90">
-            <a href="#try-demo">Try Demo</a>
+            <a href="https://tally.so/r/mKRDp7" target="_blank" rel="noopener noreferrer">Join the Waitlist</a>
           </Button>
         </nav>
 
@@ -57,13 +51,6 @@ const Header = () => {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <nav className="md:hidden bg-white border-t border-gray-100 px-4 py-4 flex flex-col gap-4 animate-fade-in-up">
-          <Link
-            to="/pricing"
-            className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors py-2"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Pricing
-          </Link>
           <a 
             href="#how-it-works" 
             className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors py-2"
@@ -85,11 +72,15 @@ const Header = () => {
           >
             Testimonials
           </a>
-          <Button asChild variant="outline" className="w-full">
-            <a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</a>
-          </Button>
           <Button asChild className="w-full bg-peekly-orange hover:bg-peekly-orange/90">
-            <a href="#try-demo" onClick={() => setIsMenuOpen(false)}>Try Demo</a>
+            <a 
+              href="https://tally.so/r/mKRDp7" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Join the Waitlist
+            </a>
           </Button>
         </nav>
       )}

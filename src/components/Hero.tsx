@@ -21,7 +21,7 @@ const Hero = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="bg-peekly-orange hover:bg-peekly-orange/90 text-white rounded-full">
-                <a href="#try-demo">Try the Demo</a>
+                <a href="https://tally.so/r/mKRDp7" target="_blank" rel="noopener noreferrer">Join the Waitlist</a>
               </Button>
               
               <Button asChild variant="outline" size="lg" className="rounded-full gap-2">

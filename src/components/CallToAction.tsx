@@ -11,15 +11,8 @@ const CallToAction = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email.trim()) return;
-    
-    setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 1500);
+    // Instead of processing the form, redirect to the waitlist
+    window.open("https://tally.so/r/mKRDp7", "_blank", "noopener noreferrer");
   };
 
   return (
@@ -53,58 +46,25 @@ const CallToAction = () => {
                 </div>
                 
                 <div className="w-full lg:w-1/2 bg-gray-50 p-6 rounded-xl">
-                  {!submitted ? (
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2">Get Early Access</h3>
-                      <p className="text-gray-500 mb-6">Be among the first to experience Peekly</p>
-                      
-                      <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                            Work Email
-                          </label>
-                          <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="your@company.com"
-                            required
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-peekly-orange focus:border-transparent"
-                          />
-                        </div>
-                        
-                        <Button
-                          type="submit"
-                          className="w-full bg-peekly-orange hover:bg-peekly-orange/90 font-medium text-white py-4 flex items-center justify-center gap-2"
-                          disabled={loading || !email.trim()}
-                        >
-                          {loading ? (
-                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          ) : (
-                            <>
-                              Get Started
-                              <ArrowRight className="h-4 w-4" />
-                            </>
-                          )}
-                        </Button>
-                      </form>
-                      
-                      <p className="text-xs text-gray-500 mt-4 text-center">
-                        By signing up, you agree to our Terms of Service and Privacy Policy.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-                        <CheckCircle2 className="h-8 w-8 text-green-600" />
-                      </div>
-                      <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
-                      <p className="text-gray-600">
-                        We've received your request for early access. We'll be in touch soon with next steps!
-                      </p>
-                    </div>
-                  )}
+                  <div className="text-center py-8">
+                    <h3 className="text-xl font-semibold mb-6">Ready to transform how you use data?</h3>
+                    <Button
+                      asChild
+                      className="w-full bg-peekly-orange hover:bg-peekly-orange/90 font-medium text-white py-4 flex items-center justify-center gap-2"
+                    >
+                      <a 
+                        href="https://tally.so/r/mKRDp7" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        Join the Waitlist
+                        <ArrowRight className="h-4 w-4" />
+                      </a>
+                    </Button>
+                    <p className="text-sm text-gray-500 mt-4">
+                      Be among the first to experience Peekly
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

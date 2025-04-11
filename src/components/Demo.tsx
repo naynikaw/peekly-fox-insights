@@ -2,6 +2,24 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SearchX, Search, ArrowRight } from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const Demo = () => {
   const [query, setQuery] = useState("");
@@ -10,10 +28,36 @@ const Demo = () => {
   const [demoResult, setDemoResult] = useState<null | {
     title: string;
     text: string;
-    chart: string;
+    chartType: "bar" | "line" | "area" | "pie";
+    chartData: any[];
     recommendation: string;
   }>(null);
 
+  const channelPerformanceData = [
+    { name: "Facebook", conversions: 320, ctr: 4.2, cpa: 12, fill: "#4267B2" },
+    { name: "Instagram", conversions: 280, ctr: 3.8, cpa: 14, fill: "#E1306C" },
+    { name: "Google", conversions: 180, ctr: 2.3, cpa: 22, fill: "#34A853" },
+    { name: "LinkedIn", conversions: 90, ctr: 1.5, cpa: 38, fill: "#0077B5" },
+    { name: "Twitter", conversions: 50, ctr: 1.1, cpa: 45, fill: "#1DA1F2" }
+  ];
+  
+  const monthlyComparisonData = [
+    { name: "Week 1", "This Month": 65, "Last Month": 42 },
+    { name: "Week 2", "This Month": 78, "Last Month": 55 },
+    { name: "Week 3", "This Month": 94, "Last Month": 70 },
+    { name: "Week 4", "This Month": 120, "Last Month": 85 }
+  ];
+  
+  const budgetAllocationData = [
+    { name: "Social", value: 45 },
+    { name: "Search", value: 25 },
+    { name: "Display", value: 15 },
+    { name: "Email", value: 10 },
+    { name: "Other", value: 5 }
+  ];
+  
+  const COLORS = ['#9b87f5', '#F97316', '#0EA5E9', '#8B5CF6', '#D946EF'];
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -22,14 +66,48 @@ const Demo = () => {
     setLoading(true);
     setDemoActive(true);
     
-    // Simulate API response
+    // Match query to predefined responses based on example queries
     setTimeout(() => {
-      setDemoResult({
-        title: "Campaign Performance Analysis",
-        text: "Based on your data from the last 30 days, your social media campaigns are outperforming your search ads by 37% in terms of conversion rate. The average CTR across channels is 2.8%, with Facebook showing the highest engagement.",
-        chart: "📊 [Visualization of channel performance comparison]",
-        recommendation: "Consider reallocating 20% of your search ad budget to your top-performing social campaigns to maximize ROI. Focus on the 25-34 age demographic where engagement is highest."
-      });
+      if (query.toLowerCase().includes("roi") || query.toLowerCase().includes("best")) {
+        setDemoResult({
+          title: "Channel ROI Analysis",
+          text: "Based on your data from the last 30 days, your social media campaigns are outperforming your search ads by 37% in terms of conversion rate. The average CTR across channels is 2.8%, with Facebook showing the highest engagement.",
+          chartType: "bar",
+          chartData: channelPerformanceData,
+          recommendation: "Consider reallocating 20% of your search ad budget to your top-performing social campaigns to maximize ROI. Focus on the 25-34 age demographic where engagement is highest."
+        });
+      } else if (query.toLowerCase().includes("conversion") || query.toLowerCase().includes("compare")) {
+        setDemoResult({
+          title: "Conversion Rate Comparison",
+          text: "Your conversion rates have improved by 14.3% compared to last month. The strongest weekly growth was observed in week 3, with a 34% increase over the same period last month.",
+          chartType: "line",
+          chartData: monthlyComparisonData,
+          recommendation: "The new call-to-action design implemented in week 2 correlates with increased conversions. Consider expanding this design approach to all campaign landing pages."
+        });
+      } else if (query.toLowerCase().includes("budget") || query.toLowerCase().includes("focus")) {
+        setDemoResult({
+          title: "Budget Allocation Analysis",
+          text: "Your current budget allocation favors social media channels (45%), followed by search advertising (25%). Based on performance metrics, this distribution is optimal for your current goals.",
+          chartType: "pie",
+          chartData: budgetAllocationData,
+          recommendation: "Your social media spending is well-optimized. For next quarter, consider increasing your search budget by 5-10% to capitalize on growing search traffic for your primary keywords."
+        });
+      } else {
+        // Default fallback
+        setDemoResult({
+          title: "Campaign Performance Analysis",
+          text: "Analysis of your recent campaigns shows strong performance across digital channels with opportunities for optimization in your targeting strategy.",
+          chartType: "area",
+          chartData: [
+            { name: 'Jan', value: 400 },
+            { name: 'Feb', value: 300 },
+            { name: 'Mar', value: 600 },
+            { name: 'Apr', value: 800 },
+            { name: 'May', value: 700 },
+          ],
+          recommendation: "Based on audience engagement patterns, weekday afternoons (2-5pm) show the highest response rates. Consider scheduling more content during these peak hours."
+        });
+      }
       setLoading(false);
     }, 1500);
   };
@@ -48,6 +126,78 @@ const Demo = () => {
 
   const handleExampleClick = (example: string) => {
     setQuery(example);
+  };
+
+  const renderChart = () => {
+    if (!demoResult) return null;
+    
+    switch (demoResult.chartType) {
+      case 'bar':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={demoResult.chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="conversions" name="Conversions" fill="#9b87f5" />
+              <Bar dataKey="ctr" name="CTR (%)" fill="#f5571a" />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+      case 'line':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={demoResult.chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="This Month" stroke="#9b87f5" strokeWidth={2} />
+              <Line type="monotone" dataKey="Last Month" stroke="#8E9196" strokeWidth={2} strokeDasharray="5 5" />
+            </LineChart>
+          </ResponsiveContainer>
+        );
+      case 'pie':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={demoResult.chartData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+              >
+                {demoResult.chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        );
+      case 'area':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={demoResult.chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Area type="monotone" dataKey="value" stroke="#f5571a" fill="#f5571a" fillOpacity={0.3} />
+            </AreaChart>
+          </ResponsiveContainer>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -136,14 +286,11 @@ const Demo = () => {
                       <div className="bg-blue-500 h-8 w-8 rounded-full flex-shrink-0 flex items-center justify-center text-white font-semibold">
                         P
                       </div>
-                      <div className="ml-3">
+                      <div className="ml-3 w-full">
                         <h4 className="font-semibold text-lg mb-2">{demoResult?.title}</h4>
                         <p className="text-gray-700 mb-4">{demoResult?.text}</p>
-                        <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 flex items-center justify-center h-40">
-                          <div className="text-center">
-                            <p className="text-2xl mb-2">{demoResult?.chart}</p>
-                            <p className="text-sm text-gray-500">Interactive chart would appear here</p>
-                          </div>
+                        <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 h-64">
+                          {renderChart()}
                         </div>
                         <div className="bg-green-50 p-4 rounded-lg border border-green-100">
                           <p className="text-sm font-semibold mb-1 text-green-800">Recommendation:</p>

@@ -4,8 +4,8 @@ import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import Demo from "@/components/Demo";
 import Benefits from "@/components/Benefits";
-import Testimonials from "@/components/Testimonials";
 import CallToAction from "@/components/CallToAction";
+// Testimonials import is removed but the component still exists in the project
 
 const Index = () => {
   return (
@@ -14,7 +14,8 @@ const Index = () => {
       <HowItWorks />
       <Demo />
       <Benefits />
-      <Testimonials />
+      {/* Testimonials component is commented out, preserving the code */}
+      {/* <Testimonials /> */}
       <CallToAction />
     </Layout>
   );

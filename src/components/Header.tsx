@@ -30,9 +30,6 @@ const Header = () => {
           <a href="#benefits" className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors">
             Benefits
           </a>
-          <a href="#testimonials" className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors">
-            Testimonials
-          </a>
           <Button asChild className="bg-peekly-orange hover:bg-peekly-orange/90">
             <a href="https://tally.so/r/mKRDp7" target="_blank" rel="noopener noreferrer">Join the Waitlist</a>
           </Button>
@@ -64,13 +61,6 @@ const Header = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Benefits
-          </a>
-          <a 
-            href="#testimonials" 
-            className="text-sm font-medium text-gray-600 hover:text-peekly-orange transition-colors py-2"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Testimonials
           </a>
           <Button asChild className="w-full bg-peekly-orange hover:bg-peekly-orange/90">
             <a 

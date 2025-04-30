@@ -8,6 +8,7 @@ import { useState, useEffect, createContext } from "react";
 import Index from "./pages/Index";
 import PricingPage from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
+import { AnalyticsProvider } from '@/contexts/AnalyticsContext';
 
 // Industry Pages
 import EcommercePage from "./pages/industry/Ecommerce";
@@ -75,46 +76,48 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/pricing-hidden" element={<PricingPage />} />
-              
-              {/* Industry Routes */}
-              <Route path="/industry/ecommerce" element={<EcommercePage />} />
-              <Route path="/industry/saas" element={<SaasPage />} />
-              <Route path="/industry/solopreneurs" element={<SolopreneursPage />} />
-              <Route path="/industry/smb" element={<SMBPage />} />
-              <Route path="/industry/marketing-agencies" element={<MarketingAgenciesPage />} />
-              
-              {/* Team Routes */}
-              <Route path="/team/marketers" element={<MarketersPage />} />
-              <Route path="/team/founders" element={<FoundersPage />} />
-              <Route path="/team/product" element={<ProductPage />} />
-              <Route path="/team/growth" element={<GrowthPage />} />
-              
-              {/* App Routes */}
-              <Route path="/app/login" element={<Login />} />
-              <Route path="/app/onboarding" element={
-                <ProtectedRoute>
-                  <Onboarding />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/insights" element={
-                <ProtectedRoute>
-                  <Insights />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/analytics" element={
-                <ProtectedRoute>
-                  <AnalyticsChat />
-                </ProtectedRoute>
-              } />
-              
-              {/* Catch-all */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
+          <AnalyticsProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/pricing-hidden" element={<PricingPage />} />
+                
+                {/* Industry Routes */}
+                <Route path="/industry/ecommerce" element={<EcommercePage />} />
+                <Route path="/industry/saas" element={<SaasPage />} />
+                <Route path="/industry/solopreneurs" element={<SolopreneursPage />} />
+                <Route path="/industry/smb" element={<SMBPage />} />
+                <Route path="/industry/marketing-agencies" element={<MarketingAgenciesPage />} />
+                
+                {/* Team Routes */}
+                <Route path="/team/marketers" element={<MarketersPage />} />
+                <Route path="/team/founders" element={<FoundersPage />} />
+                <Route path="/team/product" element={<ProductPage />} />
+                <Route path="/team/growth" element={<GrowthPage />} />
+                
+                {/* App Routes */}
+                <Route path="/app/login" element={<Login />} />
+                <Route path="/app/onboarding" element={
+                  <ProtectedRoute>
+                    <Onboarding />
+                  </ProtectedRoute>
+                } />
+                <Route path="/app/insights" element={
+                  <ProtectedRoute>
+                    <Insights />
+                  </ProtectedRoute>
+                } />
+                <Route path="/app/analytics" element={
+                  <ProtectedRoute>
+                    <AnalyticsChat />
+                  </ProtectedRoute>
+                } />
+                
+                {/* Catch-all */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </AnalyticsProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </AuthContext.Provider>

@@ -114,13 +114,6 @@ const VerticalTemplate = ({
                       <li className="font-medium">Data Visualization Pro ($32,100)</li>
                       <li className="font-medium">Insights Starter Kit ($18,350)</li>
                     </ol>
-                    <div className="absolute -left-6 bottom-1">
-                      <img 
-                        src="/lovable-uploads/32c7a0ad-7bb8-437b-a840-96df303ec58c.png"
-                        alt="Peekly Fox" 
-                        className="w-10 h-10 fox-shadow"
-                      />
-                    </div>
                   </div>
                 </div>
               </div>

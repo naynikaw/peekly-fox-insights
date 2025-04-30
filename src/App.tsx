@@ -81,8 +81,8 @@ const App = () => {
       <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
         <AnalyticsProvider>
           <TooltipProvider>
-            <div className="flex flex-col min-h-screen overflow-x-hidden">
-              <BrowserRouter>
+            <BrowserRouter>
+              <div className="min-h-screen flex flex-col overflow-x-hidden">
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/pricing-hidden" element={<PricingPage />} />
@@ -121,10 +121,10 @@ const App = () => {
                   {/* Catch-all */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </BrowserRouter>
-            </div>
-            <Toaster />
-            <Sonner />
+              </div>
+              <Toaster />
+              <Sonner />
+            </BrowserRouter>
           </TooltipProvider>
         </AnalyticsProvider>
       </AuthContext.Provider>

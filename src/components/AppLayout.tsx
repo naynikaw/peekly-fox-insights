@@ -25,7 +25,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     <SidebarProvider>
       <div className="min-h-screen bg-gray-50 flex w-full">
         {/* Sidebar */}
-        <Sidebar className="border-r border-gray-200">
+        <Sidebar className="border-r border-gray-200 shrink-0">
           <div className="flex flex-col h-full">
             <div className="p-4 border-b">
               <Link to="/">
@@ -69,8 +69,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         </Sidebar>
         
         {/* Main Content */}
-        <div className="flex-1 overflow-hidden">
-          <div className="h-full overflow-y-auto overflow-x-hidden">
+        <div className="flex-1 overflow-auto">
+          <div className="h-full w-full max-w-full">
             {children}
           </div>
         </div>

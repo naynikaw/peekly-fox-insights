@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { SearchX, Search, ArrowRight } from "lucide-react";
@@ -203,72 +202,80 @@ const Demo = () => {
     switch (demoResult.chartType) {
       case 'bar':
         return (
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip />
-              <Legend wrapperStyle={{ fontSize: '12px' }} />
-              {demoResult.chartData[0]?.firstTime !== undefined ? (
-                <>
-                  <Bar dataKey="firstTime" name="First-Time Customers" fill="#9b87f5" />
-                  <Bar dataKey="returning" name="Returning Customers" stackId="a" fill="#f5571a" />
-                </>
-              ) : (
-                <Bar dataKey="value" name="Signups" fill="#f5571a" />
-              )}
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="w-full h-full">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: '12px' }} />
+                {demoResult.chartData[0]?.firstTime !== undefined ? (
+                  <>
+                    <Bar dataKey="firstTime" name="First-Time Customers" fill="#9b87f5" />
+                    <Bar dataKey="returning" name="Returning Customers" stackId="a" fill="#f5571a" />
+                  </>
+                ) : (
+                  <Bar dataKey="value" name="Signups" fill="#f5571a" />
+                )}
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         );
       case 'line':
         return (
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip />
-              <Legend wrapperStyle={{ fontSize: '12px' }} />
-              <Line type="monotone" dataKey="beforeBudgetIncrease" name="Before Budget Increase" stroke="#8E9196" strokeWidth={2} />
-              <Line type="monotone" dataKey="afterBudgetIncrease" name="After Budget Increase" stroke="#f5571a" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
+          <div className="w-full h-full">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: '12px' }} />
+                <Line type="monotone" dataKey="beforeBudgetIncrease" name="Before Budget Increase" stroke="#8E9196" strokeWidth={2} />
+                <Line type="monotone" dataKey="afterBudgetIncrease" name="After Budget Increase" stroke="#f5571a" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         );
       case 'pie':
         return (
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={demoResult.chartData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-                label={({ name, percent }) => `${name}: $${demoResult.chartData.find(item => item.name === name)?.value}`}
-              >
-                {demoResult.chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => [`$${value}`, 'Lifetime Value']} />
-              <Legend wrapperStyle={{ fontSize: '12px' }} />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="w-full h-full">
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={demoResult.chartData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) => `${name}: $${demoResult.chartData.find(item => item.name === name)?.value}`}
+                >
+                  {demoResult.chartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => [`$${value}`, 'Lifetime Value']} />
+                <Legend wrapperStyle={{ fontSize: '12px' }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         );
       case 'area':
         return (
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip />
-              <Area type="monotone" dataKey="value" stroke="#f5571a" fill="#f5571a" fillOpacity={0.3} />
-            </AreaChart>
-          </ResponsiveContainer>
+          <div className="w-full h-full">
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Area type="monotone" dataKey="value" stroke="#f5571a" fill="#f5571a" fillOpacity={0.3} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
         );
       default:
         return null;
@@ -374,7 +381,7 @@ const Demo = () => {
                         
                         <h4 className="font-semibold text-lg mb-2">{demoResult?.title}</h4>
                         <p className="text-gray-700 mb-4">{demoResult?.text}</p>
-                        <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 h-64">
+                        <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 overflow-hidden">
                           {renderChart()}
                         </div>
                         <div className="bg-green-50 p-4 rounded-lg border border-green-100">

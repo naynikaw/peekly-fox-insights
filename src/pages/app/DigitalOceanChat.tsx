@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/components/ui/use-toast';
-import { Message, Send } from 'lucide-react';
+import { MessageSquare, Send } from 'lucide-react';
 
 interface MessageType {
   content: string;
@@ -101,7 +101,7 @@ const DigitalOceanChat: React.FC = () => {
     <AppLayout>
       <div className="flex flex-col h-full p-4 md:p-6">
         <div className="flex items-center mb-4">
-          <Message className="mr-2 h-5 w-5 text-peekly-orange" />
+          <MessageSquare className="mr-2 h-5 w-5 text-peekly-orange" />
           <h1 className="text-2xl font-semibold">Digital Ocean Chat</h1>
         </div>
         <Separator className="mb-4" />

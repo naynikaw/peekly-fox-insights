@@ -29,7 +29,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           <div className="flex flex-col h-full">
             <div className="p-4 border-b">
               <Link to="/">
-                <div className="font-bold text-xl text-peekly-orange">Peekly</div>
+                <img src="/lovable-uploads/32c7a0ad-7bb8-437b-a840-96df303ec58c.png" alt="Peekly" className="h-8" />
               </Link>
             </div>
             

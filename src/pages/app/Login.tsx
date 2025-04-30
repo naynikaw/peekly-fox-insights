@@ -30,7 +30,7 @@ const Login: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <img src="//lovable-uploads/32c7a0ad-7bb8-437b-a840-96df303ec58c.png" alt="Peekly" className="h-12 mx-auto mb-4" />
+          <img src="/lovable-uploads/32c7a0ad-7bb8-437b-a840-96df303ec58c.png" alt="Peekly" className="h-12 mx-auto mb-4" />
           <h1 className="text-2xl font-bold">Welcome to Peekly Analytics</h1>
           <p className="text-gray-500 mt-2">Sign in to access your analytics dashboard</p>
         </div>

@@ -204,12 +204,12 @@ const Demo = () => {
       case 'bar':
         return (
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={demoResult.chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <BarChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Legend />
+              <Legend wrapperStyle={{ fontSize: '12px' }} />
               {demoResult.chartData[0]?.firstTime !== undefined ? (
                 <>
                   <Bar dataKey="firstTime" name="First-Time Customers" fill="#9b87f5" />
@@ -224,12 +224,12 @@ const Demo = () => {
       case 'line':
         return (
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={demoResult.chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <LineChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Legend />
+              <Legend wrapperStyle={{ fontSize: '12px' }} />
               <Line type="monotone" dataKey="beforeBudgetIncrease" name="Before Budget Increase" stroke="#8E9196" strokeWidth={2} />
               <Line type="monotone" dataKey="afterBudgetIncrease" name="After Budget Increase" stroke="#f5571a" strokeWidth={2} />
             </LineChart>
@@ -254,17 +254,17 @@ const Demo = () => {
                 ))}
               </Pie>
               <Tooltip formatter={(value) => [`$${value}`, 'Lifetime Value']} />
-              <Legend />
+              <Legend wrapperStyle={{ fontSize: '12px' }} />
             </PieChart>
           </ResponsiveContainer>
         );
       case 'area':
         return (
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={demoResult.chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <AreaChart data={demoResult.chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
               <Area type="monotone" dataKey="value" stroke="#f5571a" fill="#f5571a" fillOpacity={0.3} />
             </AreaChart>

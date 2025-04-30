@@ -73,18 +73,30 @@ const DigitalOceanChat: React.FC = () => {
       
       let responseContent: string;
       
-      // Check if the response has the expected structure
+      // Updated response parsing to prioritize the "result" field
       if (data && typeof data === 'object') {
-        if (data.response) {
+        if (data.result) {
+          responseContent = data.result;
+        } else if (data.response) {
           responseContent = data.response;
         } else if (data.error) {
           responseContent = `Error: ${data.error}`;
         } else if (data.message) {
           responseContent = data.message;
         } else {
-          // Try to find any text content in the response
-          const jsonStr = JSON.stringify(data);
-          responseContent = `I received a response but couldn't parse it properly. Raw data: ${jsonStr.substring(0, 200)}${jsonStr.length > 200 ? '...' : ''}`;
+          // If none of the expected fields are found, check for a response structure in the raw JSON
+          try {
+            // Check if the raw response contains the expected structure as a string
+            const jsonStr = JSON.stringify(data);
+            const match = jsonStr.match(/"result":"([^"]+)"/);
+            if (match && match[1]) {
+              responseContent = match[1].replace(/\\"/g, '"');
+            } else {
+              responseContent = `I received a response but couldn't parse it properly. Please try again.`;
+            }
+          } catch {
+            responseContent = "I received a response but couldn't parse it properly. Please try again.";
+          }
         }
       } else {
         responseContent = "I received a response but it wasn't in the expected format.";

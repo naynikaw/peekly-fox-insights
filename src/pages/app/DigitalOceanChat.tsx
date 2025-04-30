@@ -50,6 +50,8 @@ const DigitalOceanChat: React.FC = () => {
     setIsLoading(true);
     
     try {
+      console.log('Sending request to Digital Ocean API:', inputValue);
+      
       const response = await fetch('https://dolphin-app-valr6.ondigitalocean.app/api/v1/analyze', {
         method: 'POST',
         headers: {
@@ -60,14 +62,36 @@ const DigitalOceanChat: React.FC = () => {
         }),
       });
       
+      console.log('API Response status:', response.status);
+      
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
       
       const data = await response.json();
+      console.log('API Response data:', data);
+      
+      let responseContent: string;
+      
+      // Check if the response has the expected structure
+      if (data && typeof data === 'object') {
+        if (data.response) {
+          responseContent = data.response;
+        } else if (data.error) {
+          responseContent = `Error: ${data.error}`;
+        } else if (data.message) {
+          responseContent = data.message;
+        } else {
+          // Try to find any text content in the response
+          const jsonStr = JSON.stringify(data);
+          responseContent = `I received a response but couldn't parse it properly. Raw data: ${jsonStr.substring(0, 200)}${jsonStr.length > 200 ? '...' : ''}`;
+        }
+      } else {
+        responseContent = "I received a response but it wasn't in the expected format.";
+      }
       
       const botMessage: MessageType = {
-        content: data.response || "I processed your request but didn't get a clear response. Please try again.",
+        content: responseContent,
         isUser: false,
         timestamp: new Date(),
       };

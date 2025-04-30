@@ -94,13 +94,6 @@ const VerticalTemplate = ({
                     className="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-peekly-orange relative"
                   >
                     <p className="text-gray-700">"{query}"</p>
-                    <div className="absolute -left-4 bottom-0">
-                      <img 
-                        src="/lovable-uploads/32c7a0ad-7bb8-437b-a840-96df303ec58c.png"
-                        alt="Peekly Fox" 
-                        className="w-8 h-8 fox-shadow"
-                      />
-                    </div>
                   </div>
                 ))}
               </div>

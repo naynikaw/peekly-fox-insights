@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import AppLayout from '@/components/AppLayout';
 import { useAnalytics } from '@/contexts/AnalyticsContext';
@@ -177,8 +176,8 @@ const AnalyticsChat: React.FC = () => {
                     <div className="mt-4">
                       <h4 className="font-medium mb-2">{message.chartTitle}</h4>
                       <div className="h-64 w-full">
-                        <ChartContainer config={{}}>
-                          {message.chartType === 'line' && (
+                        {message.chartType === 'line' && (
+                          <ChartContainer config={{}}>
                             <RechartsLineChart data={message.chartData}>
                               <CartesianGrid strokeDasharray="3 3" />
                               <XAxis dataKey="name" />
@@ -186,9 +185,11 @@ const AnalyticsChat: React.FC = () => {
                               <Tooltip />
                               <Line type="monotone" dataKey="value" stroke="#F97316" strokeWidth={2} />
                             </RechartsLineChart>
-                          )}
-                          
-                          {message.chartType === 'bar' && (
+                          </ChartContainer>
+                        )}
+                        
+                        {message.chartType === 'bar' && (
+                          <ChartContainer config={{}}>
                             <RechartsBarChart data={message.chartData}>
                               <CartesianGrid strokeDasharray="3 3" />
                               <XAxis dataKey="name" />
@@ -196,9 +197,11 @@ const AnalyticsChat: React.FC = () => {
                               <Tooltip />
                               <Bar dataKey="value" fill="#F97316" />
                             </RechartsBarChart>
-                          )}
-                          
-                          {message.chartType === 'pie' && (
+                          </ChartContainer>
+                        )}
+                        
+                        {message.chartType === 'pie' && (
+                          <ChartContainer config={{}}>
                             <RechartsPieChart>
                               <Pie
                                 data={message.chartData}
@@ -213,8 +216,8 @@ const AnalyticsChat: React.FC = () => {
                               </Pie>
                               <Tooltip />
                             </RechartsPieChart>
-                          )}
-                        </ChartContainer>
+                          </ChartContainer>
+                        )}
                       </div>
                     </div>
                   )}
@@ -222,6 +225,7 @@ const AnalyticsChat: React.FC = () => {
               </div>
             ))}
             
+            {/* Typing indicator */}
             {isTyping && (
               <div className="mb-4">
                 <div className="inline-flex items-center bg-white border rounded-lg px-4 py-2">

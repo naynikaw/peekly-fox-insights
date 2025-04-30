@@ -28,6 +28,7 @@ import Login from "./pages/app/Login";
 import Onboarding from "./pages/app/Onboarding";
 import Insights from "./pages/app/Insights";
 import AnalyticsChat from "./pages/app/AnalyticsChat";
+import DigitalOceanChat from "./pages/app/DigitalOceanChat";
 
 export const AuthContext = createContext({
   isAuthenticated: false,
@@ -115,6 +116,11 @@ const App = () => {
                   <Route path="/app/analytics" element={
                     <ProtectedRoute>
                       <AnalyticsChat />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/app/digital-ocean-chat" element={
+                    <ProtectedRoute>
+                      <DigitalOceanChat />
                     </ProtectedRoute>
                   } />
                   

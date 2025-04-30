@@ -54,6 +54,14 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton asChild>
+                        <Link to="/app/digital-ocean-chat" className={`flex items-center py-2 px-4 rounded-md ${location.pathname === '/app/digital-ocean-chat' ? 'bg-peekly-orange/10 text-peekly-orange' : ''}`}>
+                          <MessageSquare className="mr-3 h-5 w-5" />
+                          <span>Digital Ocean Chat</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>

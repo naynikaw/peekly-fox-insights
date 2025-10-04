@@ -117,7 +117,7 @@ const AnalyticsChat: React.FC = () => {
       
       let responseMessage: Message = {
         id: userMessageId + 1,
-        text: data.answer || 'I received your question but couldn\'t generate a response.',
+        text: data.result || 'I received your question but couldn\'t generate a response.',
         sender: 'bot',
         chartType: 'none'
       };

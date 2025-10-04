@@ -99,14 +99,13 @@ const AnalyticsChat: React.FC = () => {
     
     try {
       // Call the backend API
-      const response = await fetch('https://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/chat', {
+      const response = await fetch('https://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/api/v1/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: text,
-          websiteUrl: websiteUrl || undefined,
+          query: text,
         }),
       });
 
@@ -118,7 +117,7 @@ const AnalyticsChat: React.FC = () => {
       
       let responseMessage: Message = {
         id: userMessageId + 1,
-        text: data.response || data.message || 'I received your question but couldn\'t generate a response.',
+        text: data.answer || 'I received your question but couldn\'t generate a response.',
         sender: 'bot',
         chartType: 'none'
       };

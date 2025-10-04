@@ -88,7 +88,7 @@ const AnalyticsChat: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSendMessage = (text: string = inputValue) => {
+  const handleSendMessage = async (text: string = inputValue) => {
     if (!text.trim()) return;
     
     // Add user message
@@ -97,55 +97,53 @@ const AnalyticsChat: React.FC = () => {
     setInputValue('');
     setIsTyping(true);
     
-    // Simulate AI response after a delay
-    setTimeout(() => {
+    try {
+      // Call the backend API
+      const response = await fetch('https://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: text,
+          websiteUrl: websiteUrl || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
       let responseMessage: Message = {
         id: userMessageId + 1,
-        text: generateResponse(text),
+        text: data.response || data.message || 'I received your question but couldn\'t generate a response.',
         sender: 'bot',
         chartType: 'none'
       };
       
-      // Add chart based on question content
-      if (text.toLowerCase().includes('trend') || text.toLowerCase().includes('over time')) {
-        responseMessage.chartType = 'line';
-        responseMessage.chartData = trafficData;
-        responseMessage.chartTitle = 'Website Traffic Trend';
-      } else if (text.toLowerCase().includes('page') || text.toLowerCase().includes('conversion')) {
-        responseMessage.chartType = 'bar';
-        responseMessage.chartData = conversionData;
-        responseMessage.chartTitle = 'Conversion Rate by Page';
-      } else if (text.toLowerCase().includes('channel') || text.toLowerCase().includes('source')) {
-        responseMessage.chartType = 'pie';
-        responseMessage.chartData = channelData;
-        responseMessage.chartTitle = 'Traffic by Channel';
+      // Add chart if provided by backend
+      if (data.chartType && data.chartData) {
+        responseMessage.chartType = data.chartType;
+        responseMessage.chartData = data.chartData;
+        responseMessage.chartTitle = data.chartTitle || 'Analytics Data';
       }
       
       setMessages(prev => [...prev, responseMessage]);
+    } catch (error) {
+      console.error('Error calling analytics backend:', error);
+      setMessages(prev => [...prev, {
+        id: userMessageId + 1,
+        text: 'Sorry, I encountered an error connecting to the analytics service. Please try again later.',
+        sender: 'bot',
+        chartType: 'none'
+      }]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
-  const generateResponse = (question: string): string => {
-    // Very simple response generation based on keywords
-    if (question.toLowerCase().includes('top') && question.toLowerCase().includes('page')) {
-      return "Your top performing pages last month were the homepage (45K visits), product page (32K visits), and blog (28K visits). The homepage had the highest engagement with an average session duration of 2:35.";
-    } 
-    if (question.toLowerCase().includes('trend') || question.toLowerCase().includes('over time')) {
-      return "Your website traffic has been showing a positive trend with a 23% increase over the last 6 months. July saw the highest traffic with 35K visits, which coincides with your summer promotion campaign.";
-    }
-    if (question.toLowerCase().includes('channel') || question.toLowerCase().includes('marketing')) {
-      return "Organic search is your best performing channel at 45% of total traffic, followed by paid campaigns at 25%. However, in terms of conversion rate, direct traffic leads at 4.8%.";
-    }
-    if (question.toLowerCase().includes('conversion') || question.toLowerCase().includes('checkout')) {
-      return "Your average checkout conversion rate is 2.4%, which is slightly above the industry average of 2.1%. The pricing page has your highest conversion rate at 7.3%.";
-    }
-    if (question.toLowerCase().includes('product') || question.toLowerCase().includes('revenue')) {
-      return "Your top revenue generating products are Premium Plan ($45K), Basic Plan ($32K), and Enterprise Solution ($28K). The Premium Plan also has the highest profit margin at 68%.";
-    }
-    // Default response
-    return "Based on your website analytics, I can see interesting patterns in your data. Your traffic has been growing steadily and your conversion rates are above industry average. Would you like me to dive deeper into any specific metric?";
-  };
 
   return (
     <AppLayout>

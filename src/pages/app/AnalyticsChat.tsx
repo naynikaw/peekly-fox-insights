@@ -71,7 +71,7 @@ const suggestedPrompts = [
 ];
 
 const AnalyticsChat: React.FC = () => {
-  const { websiteUrl } = useAnalytics();
+  const { websiteUrl, propertyId, accessToken } = useAnalytics();
   const [messages, setMessages] = useState<Message[]>([
     { 
       id: 1, 
@@ -106,6 +106,10 @@ const AnalyticsChat: React.FC = () => {
         },
         body: JSON.stringify({
           query: text,
+          parameters: {
+            propertyId: propertyId || "",
+            accessToken: accessToken || ""
+          }
         }),
       });
 

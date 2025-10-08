@@ -98,26 +98,37 @@ const AnalyticsChat: React.FC = () => {
     setIsTyping(true);
     
     try {
+      // Prepare request payload
+      const payload = {
+        query: text,
+        parameters: {
+          propertyId: propertyId || "",
+          accessToken: accessToken || ""
+        }
+      };
+      
+      console.log('Sending request to backend:', payload);
+      
       // Call the backend API
       const response = await fetch('http://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/api/v1/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          query: text,
-          parameters: {
-            propertyId: propertyId || "",
-            accessToken: accessToken || ""
-          }
-        }),
+        body: JSON.stringify(payload),
       });
+      
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Backend error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const data = await response.json();
+      console.log('Backend response data:', data);
       
       let responseMessage: Message = {
         id: userMessageId + 1,
@@ -136,9 +147,12 @@ const AnalyticsChat: React.FC = () => {
       setMessages(prev => [...prev, responseMessage]);
     } catch (error) {
       console.error('Error calling analytics backend:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      console.error('Full error details:', errorMessage);
+      
       setMessages(prev => [...prev, {
         id: userMessageId + 1,
-        text: 'Sorry, I encountered an error connecting to the analytics service. Please try again later.',
+        text: `Sorry, I encountered an error: ${errorMessage}. Please check the console for more details.`,
         sender: 'bot',
         chartType: 'none'
       }]);

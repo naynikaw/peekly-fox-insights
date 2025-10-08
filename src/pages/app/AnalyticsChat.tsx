@@ -110,7 +110,7 @@ const AnalyticsChat: React.FC = () => {
       console.log('Sending request to backend:', payload);
       
       // Call the backend API
-      const response = await fetch('http://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/api/v1/analyze', {
+      const response = await fetch('https://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/api/v1/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

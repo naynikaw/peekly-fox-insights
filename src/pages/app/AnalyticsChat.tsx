@@ -109,11 +109,12 @@ const AnalyticsChat: React.FC = () => {
       
       console.log('Sending request to backend:', payload);
       
-      // Call the backend API
-      const response = await fetch('https://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/api/v1/analyze', {
+      // Call the backend API via secure proxy
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analytics-proxy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify(payload),
       });

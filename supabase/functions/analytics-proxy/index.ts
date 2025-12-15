@@ -1,3 +1,4 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const BACKEND_URL = "http://peekly-alb-1351326148.us-east-1.elb.amazonaws.com/api/v1/analyze";
